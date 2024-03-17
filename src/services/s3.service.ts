@@ -19,6 +19,18 @@ export class S3Service {
         return "https://" + bucket + ".s3.amazonaws.com/" + key;
     }
 
+    getKey(url: string, bucketName: string): string | null {
+        const regex = new RegExp(`^https://${bucketName}.s3.amazonaws.com/(.+)$`);
+
+        const match = url.match(regex);
+        if (match) {
+            const key = match[1];
+            return key;
+        }
+
+        return null;
+    }
+
     async getSignedUrl(bucket: string, key: string, contentType: string, expiresIn: number): Promise<S3SignedUrl> {
         const bucketParams = {
             Bucket: bucket,
