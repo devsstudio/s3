@@ -6,7 +6,6 @@ import {
 import { S3SignedUrl } from '../dto/response/s3-signed-url';
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import { S3Config } from '../dto/data/s3-config';
-import { plainToInstance } from 'class-transformer';
 
 export class S3Service {
     protected s3Client: S3Client;
@@ -43,11 +42,11 @@ export class S3Service {
             expiresIn: expiresIn,
         });
 
-        return plainToInstance(S3SignedUrl, {
+        return {
             key: key,
-            signedUrl: signedUrl,
-            futureUrl: this.getUrl(bucket, key)
-        });
+            signed_url: signedUrl,
+            future_url: this.getUrl(bucket, key)
+        };
     }
 
     async deleteObject(bucket: string, key: string) {
