@@ -10,8 +10,8 @@ import { S3Config } from '../dto/data/s3-config';
 export class S3Service {
     protected s3Client: S3Client;
 
-    constructor(private readonly config: S3Config = null) {
-        this.s3Client = new S3Client(config);
+    constructor(private readonly config: S3Config | null = null) {
+        this.s3Client = new S3Client(config || {});
     }
 
     getUrl(bucket: string, key: string): string {
